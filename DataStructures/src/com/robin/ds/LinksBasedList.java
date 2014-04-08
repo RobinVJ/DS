@@ -9,6 +9,12 @@ package com.robin.ds;
  */
 public class LinksBasedList<E> {
 
+   /**
+    * A Node in the Linked List
+    * 
+    * @author robin
+    * 
+    */
    private class Link {
       E data;
       Link next, prev;
@@ -115,9 +121,9 @@ public class LinksBasedList<E> {
             tempLink = tempLink.next;
          }
       }
-//      if (null != tempLink) {
-         data = tempLink.data;
-//      }
+      // if (null != tempLink) {
+      data = tempLink.data;
+      // }
       return data;
    }
 
@@ -146,10 +152,10 @@ public class LinksBasedList<E> {
             tempLink = tempLink.next;
          }
       }
-//      if (null != tempLink) {
-         oldValue = tempLink.data;
-         tempLink.data = newVal;
-//      }
+      // if (null != tempLink) {
+      oldValue = tempLink.data;
+      tempLink.data = newVal;
+      // }
       return oldValue;
    }
 
@@ -166,40 +172,18 @@ public class LinksBasedList<E> {
       }
       if (index < size) {
          insertValue(index, newVal);
-      } else {//insert at end
+      } else {// insert at end
          Link newLink = new Link();
          newLink.data = newVal;
          if (null == tail) {
-            head = tail = newLink;//first node
+            head = tail = newLink;// first node
          } else {
             tail.next = newLink;
             newLink.prev = tail;
-            tail = newLink;            
+            tail = newLink;
          }
       }
       size++;
-   }
-
-   private void insertValue(int index, E newVal) {
-      Link tempLink = null;
-      if (index > this.size() / 2) {
-         // get value from reverse
-         tempLink = tail;
-         for (int i = this.size() - 1; i > index - 1; i--) {
-            tempLink = tempLink.prev;
-         }
-      } else {
-         tempLink = head;
-         for (int i = 0; i < index - 1; i++) {
-            tempLink = tempLink.next;
-         }
-      }
-      Link newlink = new Link();
-      newlink.data = newVal;
-      newlink.next = tempLink.next;
-      tempLink.next.prev = newlink;
-      newlink.prev = tempLink;
-      tempLink.next = newlink;
    }
 
    /**
@@ -232,12 +216,12 @@ public class LinksBasedList<E> {
                linkToRemove = linkToRemove.next;
             }
          }
-//         if (null != linkToRemove.next) {
-            linkToRemove.next.prev = linkToRemove.prev;
-//         }
-//         if (null != linkToRemove.prev) {
-            linkToRemove.prev.next = linkToRemove.next;
-//         }
+         // if (null != linkToRemove.next) {
+         linkToRemove.next.prev = linkToRemove.prev;
+         // }
+         // if (null != linkToRemove.prev) {
+         linkToRemove.prev.next = linkToRemove.next;
+         // }
          oldValue = linkToRemove.data;
       }
       size--;
@@ -260,6 +244,34 @@ public class LinksBasedList<E> {
                + (size - 1));
       }
 
+   }
+
+   /**
+    * Method will insert a new value inside the list
+    * 
+    * @param index
+    * @param newVal
+    */
+   private void insertValue(int index, E newVal) {
+      Link tempLink = null;
+      if (index > this.size() / 2) {
+         // get value from reverse
+         tempLink = tail;
+         for (int i = this.size() - 1; i > index - 1; i--) {
+            tempLink = tempLink.prev;
+         }
+      } else {
+         tempLink = head;
+         for (int i = 0; i < index - 1; i++) {
+            tempLink = tempLink.next;
+         }
+      }
+      Link newlink = new Link();
+      newlink.data = newVal;
+      newlink.next = tempLink.next;
+      tempLink.next.prev = newlink;
+      newlink.prev = tempLink;
+      tempLink.next = newlink;
    }
 
 }
