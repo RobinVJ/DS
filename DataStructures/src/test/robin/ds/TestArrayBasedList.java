@@ -1,13 +1,12 @@
 package test.robin.ds;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.math.BigDecimal;
+
+import org.junit.Test;
 
 import com.robin.ds.ArrayBasedList;
 
@@ -36,7 +35,7 @@ public class TestArrayBasedList {
    @Test(expected = UnsupportedOperationException.class)
    public void setInvalidCase1() {
       ArrayBasedList<Integer> integers = new ArrayBasedList<>();
-      integers.set(1, 1);
+      integers.set(0, 1);
    }
 
    @Test(expected = UnsupportedOperationException.class)
@@ -50,6 +49,19 @@ public class TestArrayBasedList {
       ArrayBasedList<Integer> integers = new ArrayBasedList<>(new Integer[] { 1, 2, 3 });
       assertEquals(Integer.valueOf(3), Integer.valueOf(integers.size()));
       integers.set(3, 3);
+   }
+
+   @Test(expected = UnsupportedOperationException.class)
+   public void addInvalidCase1() {
+      ArrayBasedList<String> strs = new ArrayBasedList<>(new String[] { "sdsd", "seuwqhe" });
+      strs.add(3, "quwq");
+   }
+
+   @Test
+   public void addAtEnd() {
+      ArrayBasedList<BigDecimal> bigDecs = new ArrayBasedList<>();
+      assertTrue(bigDecs.isEmpty());
+      bigDecs.add(0, BigDecimal.ZERO);// add in end
    }
 
    @Test
@@ -67,6 +79,5 @@ public class TestArrayBasedList {
       assertEquals(Integer.valueOf(6), Integer.valueOf(integers.size()));
       assertEquals(Integer.valueOf(6), integers.get(5));
    }
-   
- 
+
 }

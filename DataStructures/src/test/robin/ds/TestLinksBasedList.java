@@ -67,7 +67,7 @@ public class TestLinksBasedList {
    }
    
    @Test
-   public void addInvalidCase2() {
+   public void addAtEnd() {
       LinksBasedList<Integer> integers = new LinksBasedList<>();
       integers.add(0, 1);//add in end
    }

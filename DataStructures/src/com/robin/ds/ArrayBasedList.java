@@ -96,6 +96,7 @@ public class ArrayBasedList<E> {
 
    /**
     * Method is used to set a value at a selected index
+    * 
     * @param index
     * @param newVal
     * @return value
@@ -110,7 +111,9 @@ public class ArrayBasedList<E> {
    }
 
    /**
-    * Method is used to add a value at a particular index (add maximum upto index = size)
+    * Method is used to add a value at a particular index (add maximum upto
+    * index = size)
+    * 
     * @param index
     * @param newVal
     */
@@ -126,7 +129,7 @@ public class ArrayBasedList<E> {
             array[i + 1] = array[i];
          }
          array[index] = newVal;
-      } else if (index == size) {
+      } else {// if (index == size) {
          // inserting in a new location
          array[index] = newVal;
       }
@@ -140,13 +143,13 @@ public class ArrayBasedList<E> {
     * @return removed value
     */
    public E remove(int index) {
-      checkValidAccess(index);
+      checkValidAccess(index); // handles case >index-1
       @SuppressWarnings("unchecked")
       E oldValue = (E) array[index];
       if (index == size - 1) {
          // remove from end
          array[index] = null;
-      } else if (index < size - 1) {
+      } else {// if (index < size - 1) {
          for (int i = index; i < size - 1; i++) {
             array[i] = array[i + 1];
          }
@@ -189,6 +192,7 @@ public class ArrayBasedList<E> {
 
    /**
     * Method will resize the array.
+    * 
     * @param newCapacity
     */
    private void resize(int newCapacity) {
