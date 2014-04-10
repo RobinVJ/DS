@@ -34,4 +34,20 @@ public class Sort {
    public static <E extends Comparable<E>> void quickSort(E[] values) {
       QuickSort.sort(values, 0, values.length - 1);
    }
+   
+   /**
+    * Perform sorting on the given array using bubble sort
+    * @param values
+    */
+   public static <E extends Comparable<E>> void bubbleSort(E[] values) {
+      BubbleSort.sort(values);
+   }
+   
+   /**
+    * Perform sorting on the given array using bubble sort
+    * @param values
+    */
+   public static <E extends Comparable<E>> void improvedBubbleSort(E[] values) {
+      ImprovedBubbleSort.sort(values);
+   }
 }
