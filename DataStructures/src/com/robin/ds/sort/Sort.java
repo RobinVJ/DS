@@ -16,4 +16,9 @@ public class Sort {
    public static <E extends Comparable<E>> void mergeSort(E[] values) {
       MergeSort.mergeSort(values, 0, values.length - 1);
    }
+
+   public static <E extends Comparable<E>> void insertionSort(E[] values) {
+      InsertionSort.sort(values);
+   }
+
 }
