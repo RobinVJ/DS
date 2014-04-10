@@ -1,4 +1,4 @@
-package test.robin.ds;
+package test.robin.ds.sort;
 
 import static org.junit.Assert.*;
 
@@ -9,12 +9,12 @@ import org.junit.Test;
 
 import com.robin.ds.sort.Sort;
 
-public class TestImprovedBubbleSort {
+public class TestShakerSort {
 
    @Test
    public void testNormalArray() {
       Integer[] numbers = new Integer[] { 10, 98, 9, 7, 65, 14, 1, 2 };
-      Sort.improvedBubbleSort(numbers);
+      Sort.shakerSort(numbers);
       Assert.assertArrayEquals(new Integer[] { 1, 2, 7, 9, 10, 14, 65, 98 }, numbers);
    }
 
@@ -23,7 +23,7 @@ public class TestImprovedBubbleSort {
       BigDecimal[] numbers = new BigDecimal[] { new BigDecimal("100"), new BigDecimal("98"), new BigDecimal("89"),
             new BigDecimal("77"), new BigDecimal("65"), new BigDecimal("34.8"), new BigDecimal("34.1"),
             new BigDecimal("0.876"), BigDecimal.ZERO };
-      Sort.improvedBubbleSort(numbers);
+      Sort.shakerSort(numbers);
       BigDecimal[] expected = new BigDecimal[] { BigDecimal.ZERO, new BigDecimal("0.876"), new BigDecimal("34.1"),
             new BigDecimal("34.8"), new BigDecimal("65"), new BigDecimal("77"), new BigDecimal("89"),
             new BigDecimal("98"), new BigDecimal("100") };
@@ -33,7 +33,7 @@ public class TestImprovedBubbleSort {
    @Test
    public void testSortedArray() {
       String[] chars = new String[] { "A", "Ball", "CAT", "Diii", "Dzimim", "EEE", "Eee", "ZZZ" };
-      Sort.improvedBubbleSort(chars);
+      Sort.shakerSort(chars);
       String[] expected = new String[] { "A", "Ball", "CAT", "Diii", "Dzimim", "EEE", "Eee", "ZZZ" };
       assertArrayEquals(expected, chars);
    }

@@ -50,4 +50,13 @@ public class Sort {
    public static <E extends Comparable<E>> void improvedBubbleSort(E[] values) {
       ImprovedBubbleSort.sort(values);
    }
+   
+   /**
+    * Perform sorting on the given array using ShakerSort
+    * 
+    * @param values
+    */
+   public static <E extends Comparable<E>> void shakerSort(E[] values) {
+      ShakerSort.sort(values);
+   }
 }
