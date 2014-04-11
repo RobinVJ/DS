@@ -59,4 +59,13 @@ public class Sort {
    public static <E extends Comparable<E>> void shakerSort(E[] values) {
       ShakerSort.sort(values);
    }
+   
+   /**
+    * Perform sorting on the given array using ShakerSort
+    * 
+    * @param values
+    */
+   public static <E extends Comparable<E>> void combSort(E[] values) {
+      CombSort.sort(values);
+   }
 }
