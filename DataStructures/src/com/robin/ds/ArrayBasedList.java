@@ -7,7 +7,7 @@ package com.robin.ds;
  * 
  * @param <E>
  */
-public class ArrayBasedList<E> {
+public class ArrayBasedList<E> implements MyList<E> {
 
    private static final int DEFAULT_LENGTH = 10;
    private int size = 0; // no of elements in the list
@@ -50,7 +50,7 @@ public class ArrayBasedList<E> {
     * 
     * @param initialValues
     */
-   public ArrayBasedList(ArrayBasedList<? extends E> initialValues) {
+   public ArrayBasedList(MyList<? extends E> initialValues) {
       // array = new E[length]; cannot create a generic array
       int paramSize = initialValues.size();
       array = new Object[paramSize];

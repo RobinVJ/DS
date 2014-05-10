@@ -7,7 +7,7 @@ package com.robin.ds;
  * 
  * @param <E>
  */
-public class LinksBasedList<E> {
+public class LinksBasedList<E> implements MyList<E> {
 
    /**
     * A Node in the Linked List

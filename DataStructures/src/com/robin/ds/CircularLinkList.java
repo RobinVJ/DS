@@ -7,7 +7,7 @@ package com.robin.ds;
  * 
  * @param <E>
  */
-public class CircularLinkList<E> {
+public class CircularLinkList<E> implements MyList<E> {
 
    private class Link {
       E data;
@@ -60,7 +60,7 @@ public class CircularLinkList<E> {
     * 
     * @param initialValues
     */
-   public CircularLinkList(CircularLinkList<? extends E> initialValues) {
+   public CircularLinkList(MyList<? extends E> initialValues) {
       int paramSize = initialValues.size();
       Link lastLink = null;
       for (int i = 0; i < paramSize; i++) {
