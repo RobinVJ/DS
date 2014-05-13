@@ -68,4 +68,12 @@ public class Sort {
    public static <E extends Comparable<E>> void combSort(E[] values) {
       CombSort.sort(values);
    }
+   
+   /**
+    * Performs sorting on given array using a Heap.
+    * @param values
+    */
+   public static <E extends Comparable<E>> void heapSort(E[] values) {
+      HeapSort.sort(values);
+   }
 }
