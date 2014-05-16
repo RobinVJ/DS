@@ -11,12 +11,15 @@ import java.util.Collection;
  */
 public class Heap<T extends Comparable<T>> {
 
+   // allow subclasses to have access to the underlying heap representation.
+   protected Object[] array; // starts at 0
+   
    private int size = 0;
    private int capacity = 0;
    private boolean minHeap;
-   private Object[] array; // starts at 0
 
    private static final int MAX_CAPACITY = Integer.MAX_VALUE - 10000;
+   
 
    /**
     * Constructor.
@@ -139,103 +142,6 @@ public class Heap<T extends Comparable<T>> {
    }
 
    /**
-    * Method will resize the Heap if the capacity still exists.
-    */
-   private void resize() {
-      if (size == capacity) {
-         // need to resize to add a new element
-         Object[] newHeap = new Object[size * 2];
-         for (int i = 0; i < array.length; i++) {
-            newHeap[i] = array[i];
-         }
-         this.array = null;
-         this.array = newHeap;
-         capacity = newHeap.length;
-      }
-   }
-
-   /**
-    * Method will return the index of parent. (parent for 0 will be returned as
-    * 0)
-    * 
-    * @param index
-    * @return int value
-    */
-   private int parent(int index) {
-      // complexity resulting from having used a 0 indexed array !!
-      if (index == 0) {
-         return 0;
-      }
-      if (index % 2 == 1) {
-         return index >> 1;// faster than division
-      }
-      return (index >> 1) - 1;
-   }
-
-   /**
-    * Method will return the index for the left child (even if child index is
-    * beyond array size).
-    * 
-    * @param index
-    * @return index value
-    */
-   private int left(int index) {
-      // return 2 * i - 1;
-      if (index == 0) {
-         return 1;
-      }
-      int num = index << 1;
-      return num - 1;
-   }
-
-   /**
-    * Method will return the index for the right child (even if child index is
-    * beyond array size).
-    * 
-    * @param i
-    * @return
-    */
-   private int right(int index) {
-      // return 2 * i; // more efficiently done as a left shift
-      if (index == 0) {
-         return 2;
-      }
-      return (index << 1);
-   }
-
-   /**
-    * Method indicate if the passed value is greater than the second value
-    * subject to Heap strategy
-    * 
-    * @param val1
-    * @param val2
-    * @return
-    */
-   private boolean hasGreaterValue(T val1, T val2) {
-      boolean val1Greater = false;
-      if (minHeap) {
-         val1Greater = val1.compareTo(val2) < 0;
-      } else {
-         val1Greater = val1.compareTo(val2) > 0;
-      }
-      return val1Greater;
-   }
-
-   // private boolean isEqual(T val1, T val2) {
-   // return val1.equals(val2);
-   // }
-
-   /**
-    * Method is called as a part of the heap creation process.
-    */
-   private void buildHeap(int heapSize) {
-      size = heapSize;
-      for (int i = size / 2; i >= 0; i--) {
-         heapDown(i);
-      }
-   }
-
-   /**
     * Method is used to perform the upHeap operation.<br/>
     * <quote> When you upheap a node, you compare its value to its parent node;
     * if its value is less than its parent node, then you switch the two nodes
@@ -246,7 +152,7 @@ public class Heap<T extends Comparable<T>> {
     * @param node
     */
    @SuppressWarnings("unchecked")
-   private void heapUp(int index) {
+   protected void heapUp(int index) {
       T value = (T) array[index];
       while (true) {
          int parent = parent(index);
@@ -269,7 +175,7 @@ public class Heap<T extends Comparable<T>> {
     * @param index
     */
    @SuppressWarnings("unchecked")
-   private void heapDown(int index) {
+   protected void heapDown(int index) {
       int left = left(index);
       int right = right(index);
       int largest = index;
@@ -284,6 +190,124 @@ public class Heap<T extends Comparable<T>> {
          array[index] = array[largest];
          array[largest] = temp;
          heapDown(largest); // continue the downHeap process - log(n)
+      }
+   }
+
+   /**
+    * Method will return the index of parent. (parent for 0 will be returned as
+    * 0)
+    * 
+    * @param index
+    * @return int value
+    */
+   protected int parent(int index) {
+      // complexity resulting from having used a 0 indexed array !!
+      if (index == 0) {
+         return 0;
+      }
+      return (index -1) >> 1;
+   }
+
+   /**
+    * Method will return the index for the left child (even if child index is
+    * beyond array size).
+    * 
+    * @param index
+    * @return index value
+    */
+   protected int left(int index) {
+      // return 2 * i +1;
+      if (index == 0) {
+         return 1;
+      }
+      int num = index << 1;
+      return num + 1;
+   }
+
+   /**
+    * Method will return the index for the right child (even if child index is
+    * beyond array size).
+    * 
+    * @param i
+    * @return
+    */
+   protected int right(int index) {
+      // return 2 * i +2; // more efficiently done as a left shift
+      if (index == 0) {
+         return 2;
+      }
+      return (index << 1)+2;
+   }
+
+   /**
+    * Method checks if for a given node its direct children satisfy the heap
+    * property.
+    * 
+    * @param index
+    * @return {@link Boolean} value
+    */
+   @SuppressWarnings("unchecked")
+   protected boolean heapPropertySatisfiedForChildren(int index) {
+      int left = left(index);
+      int right = right(index);
+      boolean valid = true;
+      if (left < size && left >= 0 && hasGreaterValue((T) array[left], (T) array[index])) {
+         valid = false;
+      }
+      if (right < size && right >= 0 && hasGreaterValue((T) array[right], (T) array[index])) {
+         valid = false;
+      }
+      return valid;
+   }
+
+   /**
+    * Method indicate if the passed value is greater than the second value
+    * subject to Heap strategy
+    * 
+    * @param val1
+    * @param val2
+    * @return
+    */
+   protected boolean hasGreaterValue(T val1, T val2) { 
+      boolean val1Greater = false;
+      if (minHeap) {
+         val1Greater = val1.compareTo(val2) < 0;
+      } else {
+         val1Greater = val1.compareTo(val2) > 0;
+      }
+      return val1Greater;
+   }
+
+   // private boolean isEqual(T val1, T val2) {
+   // return val1.equals(val2);
+   // }
+
+   /**
+    * Method will resize the Heap if the capacity still exists.
+    */
+   private void resize() {
+      if (size == MAX_CAPACITY) {
+         throw new RuntimeException("Heap Overflow - cannt grow Heap any further !!");
+      }
+      if (size == capacity) {
+         // need to resize to add a new element
+         Object[] newHeap = new Object[size * 2];
+         for (int i = 0; i < array.length; i++) {
+            newHeap[i] = array[i];
+         }
+         this.array = null;
+         this.array = newHeap;
+         capacity = newHeap.length;
+      }
+   }
+   
+   /**
+    * Method is called as a part of the heap creation process.
+    */
+   private void buildHeap(int heapSize) {
+      size = heapSize;
+      for (int i = size / 2; i >= 0; i--) {
+         heapDown(i);
       }
    }
 
