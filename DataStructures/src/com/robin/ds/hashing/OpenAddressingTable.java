@@ -10,36 +10,10 @@ package com.robin.ds.hashing;
  * @param <E>
  *           the element
  */
-public class OpenAddressingTable<K, E> {
+public class OpenAddressingTable<K, E> extends AbstractArrayHashTable<K, E> {
 
    private IProbeFunction probeFunction;
    private IHashFunction<K> hashFunction;
-   private int count;
-   private Object[] values;
-
-   /**
-    * Class represents an entry in the values.
-    * 
-    * @author robin
-    * 
-    */
-   private class Entry {
-      private K key;
-      private E element;
-
-      public Entry(K key, E element) {
-         this.key = key;
-         this.element = element;
-      }
-
-      @Override
-      public String toString() {
-         return "E [ k: " + key + ", e : " + element + " ]";
-      }
-
-   }
-
-   private final Object DELETED = new Object();
 
    /**
     * Creates a {@link OpenAddressingTable} with specified number of buckets.
@@ -110,7 +84,8 @@ public class OpenAddressingTable<K, E> {
     * @return E the old value
     */
    public E insert(K key, E element) {
-//      System.out.println("Count of elements is " + count + " in aray of size " + values.length);
+      // System.out.println("Count of elements is " + count +
+      // " in aray of size " + values.length);
       E oldValue = null;
       try {
          oldValue = insertEntry(key, element);
@@ -139,7 +114,7 @@ public class OpenAddressingTable<K, E> {
          if (values[probeLocn] == null) {
             break;// value not there
          } else if (values[probeLocn] == DELETED) {
-         // DELETED instance must be ignore
+            // DELETED instance must be ignore
          } else if ((key == null && ((Entry) values[probeLocn]).key == null)
                || (key != null && key.equals(((Entry) values[probeLocn]).key))) {
             values[probeLocn] = DELETED;
@@ -147,19 +122,6 @@ public class OpenAddressingTable<K, E> {
          }// DELETED instance must be ignore
          probeLocn = this.probeFunction.probeNext(probeLocn);
       }
-   }
-
-   /**
-    * Returns the number of items in the table.
-    * 
-    * @return int value
-    */
-   public int count() {
-      return this.count;
-   }
-
-   public boolean isEmpty() {
-      return count() == 0;
    }
 
    /**
@@ -171,33 +133,12 @@ public class OpenAddressingTable<K, E> {
    protected int hash(K key) {
       return hashFunction.hash(key);
    }
-
-   /**
-    * Method is responsible for performing the rehash operation on the Hash
-    * table. It will double the table size and also remove all Deleted entries.
-    */
-   @SuppressWarnings("unchecked")
-   protected void rehash() {
-      
-      int newLength = this.findPrimeBiggerThan(values.length * 2);
-//      System.out.println("Count of elements is " + count + " in aray of size " + values.length + " Raising it to " + newLength);
-      Object[] newArray = new Object[newLength];
+   
+   @Override
+   protected void updateRehashSettings(int newLength) {
       probeFunction.setProbeLimit(newLength);
       hashFunction.setHashLimit(newLength);
-      //int originalCount = this.count;
-      Object[] originalArray = this.values;
-      this.values = newArray;
-      this.count = 0;
-
-      for (Object object : originalArray) {
-         if (object == null || object == DELETED) {
-            continue;
-         }
-         Entry e = (Entry) object;
-         insert(e.key, e.element);
-      }
-
-    //  assert (this.count == originalCount) : " Value loss during rehash";
+      
    }
 
    /**
@@ -212,30 +153,6 @@ public class OpenAddressingTable<K, E> {
       this.hashFunction = hashFunction;
       values = new Object[size];
       count = 0;
-   }
-
-   /**
-    * Method will return a prime number that occurs after the passed parameter
-    * 
-    * @param i
-    * @return int value
-    */
-   private int findPrimeBiggerThan(int i) {
-      int number = i + 1;
-      while (true) {
-         boolean hasfactorial = false;
-         for (int divisor = 2; divisor <= (int) Math.sqrt(number); divisor++) {
-            if (number % divisor == 0) {
-               hasfactorial = true;
-               break;
-            }
-         }
-         if (!hasfactorial) {
-            return number; // a prime number
-         }
-         number++;// try next number
-      }
-      // Return smallest prime number
    }
 
    /**
@@ -277,18 +194,5 @@ public class OpenAddressingTable<K, E> {
       return oldValue;
    }
 
-   /**
-    * Method checks if the two keys are both null or are they both equivalent to
-    * each other.
-    * 
-    * @param key1
-    * @param key2
-    * @return boolean value
-    */
-   private boolean nullSafeEquals(K key1, K key2) {
-      return (key1 == null && key2 == null) /* both keys are null */
-            /* are actually equal and key1 is not null */
-            || (key1 != null && key1.equals(key2));
-   }
 
 }

@@ -10,7 +10,7 @@ package com.robin.ds.hashing;
  * @param <K>
  *           Key - must be unique
  */
-public class ChainHashTable<K, E> {
+public class ChainHashTable<K, E> implements HashTable<K, E> {
 
    IHashFunction<K> hashFunction;
    private int count;
@@ -60,13 +60,6 @@ public class ChainHashTable<K, E> {
       this.hashFunction = hashFunction;
    }
 
-   /**
-    * Method looks-up the specified key value and returns the value there. In
-    * case the key does not exists it will return null
-    * 
-    * @param key
-    * @return E
-    */
    @SuppressWarnings("unchecked")
    public E lookUp(K key) {
       int index = hash(key);
@@ -84,13 +77,6 @@ public class ChainHashTable<K, E> {
       return null; // no match found after collision either
    }
 
-   /**
-    * Method will insert a value in the table.
-    * 
-    * @param key
-    * @param value
-    * @return E
-    */
    @SuppressWarnings("unchecked")
    public E insert(K key, E value) {
       E oldValue = null;
@@ -128,11 +114,6 @@ public class ChainHashTable<K, E> {
       return oldValue;
    }
 
-   /**
-    * Method will delete a value from the table, freeing up the slot.
-    * 
-    * @param key
-    */
    @SuppressWarnings("unchecked")
    public void delete(K key) {
       int index = hash(key);
@@ -163,20 +144,10 @@ public class ChainHashTable<K, E> {
 
    }
 
-   /**
-    * Returns the number of items in the table.
-    * 
-    * @return int value
-    */
    public int count() {
       return this.count;
    }
 
-   /**
-    * Method checks if the HashTable is empty.
-    * 
-    * @return boolean value
-    */
    public boolean isEmpty() {
       return count() == 0;
    }
