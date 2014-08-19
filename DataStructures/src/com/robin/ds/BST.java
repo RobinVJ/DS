@@ -1,7 +1,7 @@
 package com.robin.ds;
 
 /**
- * Class implements a Binary SearchTree
+ * Class implements a Binary SearchTree //ordered binary tree
  * 
  * @author robin
  * 
