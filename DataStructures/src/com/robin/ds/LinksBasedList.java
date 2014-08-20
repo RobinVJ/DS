@@ -167,6 +167,11 @@ public class LinksBasedList<E> implements MyList<E> {
 		// }
 		return oldValue;
 	}
+	
+	@Override
+	public void add(E newVal) {
+		add(size, newVal);
+	}
 
 	/**
 	 * Method is used to add a value at a particular index (add maximum upto

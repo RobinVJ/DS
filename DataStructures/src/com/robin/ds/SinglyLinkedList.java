@@ -101,6 +101,11 @@ public class SinglyLinkedList<E> implements MyList<E> {
 		link.data = newVal;
 		return oldVal;
 	}
+	
+	@Override
+	public void add(E newVal) {
+		add(size, newVal);
+	}
 
 	@Override
 	public void add(int index, E newVal) {
